@@ -7,6 +7,7 @@ import HowSection from './Components/HowSection'
 import StatSection from './Components/StatSection'
 
 function App() {
+
     return (
         <>
 
