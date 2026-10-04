@@ -343,3 +343,133 @@
   }
 
   ::selection { background: var(--amber); color: #1a1510; }
+
+
+  .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 18, 31, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 50;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.modal-close {
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--ink);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+.rating-input {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-input input[type="radio"] {
+  display: none;
+}
+
+.rating-input label {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--ink-dim);
+}
+
+.rating-input input[type="radio"]:checked + label {
+  background: var(--amber);
+  color: #1a1510;
+  border-color: var(--amber);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
