@@ -15,7 +15,7 @@ export default function HowSection() {
                     </div>
                     <div className="how-card">
                         <h3>Write the verdict</h3>
-                        <p>Score it, list what you liked and what not, and say who it's actually for. Share your opinion</p>
+                        <p>Score it, list what you liked and what not, and say who it's actually for. Share your opinion.</p>
                     </div>
                     <div className="how-card">
                         <h3>Let people react</h3>

@@ -1,24 +1,42 @@
-export default function ReviewModal({ onClose, onSubmit  }) {
+import isFormEmpty from "../utils.js/isFormEmpty"
+export default function ReviewModal({ onClose, onSubmit }) {
 
-    function submitHandler(e){
+    const fieldNames = {
+        game: 'Game',
+        rating: 'Rating',
+        pros: 'Pros',
+        cons: 'Cons',
+        verdict: 'Your take'
+    }
+
+    function submitHandler(e) {
+
         e.preventDefault()
+        let result = isFormEmpty(creatingReview)
         const form = new FormData(e.target)
+
         const creatingReview = {
             game: form.get('game-title'),
             rating: form.get('rating'),
             pros: form.get('pros'),
             cons: form.get('cons'),
             verdict: form.get('verdict')
-        }
-        
-        onSubmit(creatingReview)
-        
-    }
-    
 
-    
+        }
+
+        if (result.isEmpty) {
+            return alert(`Please fill the field "${fieldNames[result.key]}"`)
+        }
+
+
+        onSubmit(creatingReview)
+    }
+
+
+
     return (
         <div className="modal-backdrop" onClick={onClose}>
+            {/* e.stopPropagation to stop closing the review modal on any click */}
             <div className="modal-card" role="dialog" aria-labelledby="modal-title" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <h3 id="modal-title">Write a review</h3>
@@ -26,14 +44,14 @@ export default function ReviewModal({ onClose, onSubmit  }) {
                         ✕
                     </button>
                 </div>
-                <form className="review-form" onSubmit = {submitHandler}>
+                <form className="review-form" onSubmit={submitHandler}>
                     <div className="form-group">
                         <label htmlFor="game-title" >Game</label>
                         <input
                             type="text"
                             id="game-title"
                             placeholder="Search and select a game..."
-                            name ="game-title"
+                            name="game-title"
                         />
                     </div>
                     <div className="form-group">
@@ -69,7 +87,7 @@ export default function ReviewModal({ onClose, onSubmit  }) {
                                 rows={3}
                                 placeholder="What worked..."
                                 defaultValue={""}
-                                name ="pros"
+                                name="pros"
                             />
                         </div>
                         <div className="form-group">
@@ -79,7 +97,7 @@ export default function ReviewModal({ onClose, onSubmit  }) {
                                 rows={3}
                                 placeholder="What didn't..."
                                 defaultValue={""}
-                                name ="cons"
+                                name="cons"
                             />
                         </div>
                     </div>
@@ -90,7 +108,7 @@ export default function ReviewModal({ onClose, onSubmit  }) {
                             rows={3}
                             placeholder="The short version..."
                             defaultValue={""}
-                            name ="verdict"
+                            name="verdict"
                         />
                     </div>
                     <div className="modal-actions">

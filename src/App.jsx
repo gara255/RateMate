@@ -7,12 +7,13 @@ import HeroSection from './Components/HeroSection'
 import HowSection from './Components/HowSection'
 import ReviewModal from './Components/ReviewModal'
 import StatSection from './Components/StatSection'
-import Test from './Components/Test'
+import { useNavigate } from 'react-router'
+
+
 
 
 const apiKey = 'sb_publishable_9qhBP--rQvNZ3G9lzPtYXg_qRRPpByS'
 function App() {
-
 
     const submitUserReview = async (review) => {
         try {
@@ -21,7 +22,7 @@ function App() {
                 headers: {
                     'Content-Type': 'application/json',
                     'apikey': apiKey
-                    
+
                 },
                 body: JSON.stringify(review)
             })
@@ -31,15 +32,15 @@ function App() {
             closeModalHandler()
         }
     }
-
+    const navigate = useNavigate()
     const [showReviewModal, setShowReviewModal] = useState(false)
     const closeModalHandler = () => {
         setShowReviewModal(false)
+        navigate('/')
     }
     const createReview = () => {
         setShowReviewModal(true)
     }
-
 
 
 
@@ -60,7 +61,6 @@ function App() {
             <HowSection />
 
             <Footer />
-
 
         </>
 

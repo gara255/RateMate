@@ -1,12 +1,14 @@
+import { Link } from "react-router";
+
 export default function Header() {
     return (
         <header>
             <nav className="wrap">
                 <div className="logo">Rate<span>Mate</span></div>
                 <div className="nav-links">
-                    <a href="#catalog">Catalog</a>
-                    <a href="#how">How it works</a>
-                    <a href="#">Leaderboards</a>
+                    <Link to="/">Home</Link>
+                    <Link to="/catalog">Catalog</Link>
+                    <Link to="/how">How it works</Link>
                 </div>
                 <div className="nav-search">
             <input type="text" className="search-input" placeholder="Search reviews..." />
