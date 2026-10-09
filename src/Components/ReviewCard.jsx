@@ -1,18 +1,22 @@
-export default function ReviewCard() {
+export default function ReviewCard({ game, rating, pros, cons, verdict }) {
+
+
     return (
         <article className="card">
             <div className="card-cover">cover art</div>
             <div className="card-top">
                 <div>
-                    <h3>Hollow Signal</h3>
-                    <div className="by">by Marin</div>
+                    <h3>{game}</h3>
+                    <div className="by">Add User</div>
                 </div>
-                <div className="score">8.4</div>
+                <div className="score">{rating}</div>
             </div>
-            <p className="verdict">Atmosphere carries the first act harder than the combat does — worth it for the sound design alone.</p>
             <div className="pc-row">
-                <div>👍 Pros: 3</div>
-                <div>👎 Cons: 1</div>
+                <p className="pros"><strong>Pros:{pros}</strong> </p>
+                <p className="cons"><strong>Cons:{cons}</strong> </p>
+            </div>
+            <div className="verdict">
+                <strong>Personal Take:{verdict}</strong>
             </div>
             <div className="reactions">
                 <span className="pill">🔥 24</span>

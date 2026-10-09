@@ -10,26 +10,26 @@ export default function ReviewModal({ onClose, onSubmit }) {
     }
 
     function submitHandler(e) {
-
         e.preventDefault()
-        let result = isFormEmpty(creatingReview)
-        const form = new FormData(e.target)
 
-        const creatingReview = {
+        const creatingReviewTextNames = {
             game: form.get('game-title'),
             rating: form.get('rating'),
             pros: form.get('pros'),
             cons: form.get('cons'),
             verdict: form.get('verdict')
-
         }
+
+        const form = new FormData(e.target)
+
+        let result = isFormEmpty(creatingReviewTextNames)
 
         if (result.isEmpty) {
             return alert(`Please fill the field "${fieldNames[result.key]}"`)
         }
 
 
-        onSubmit(creatingReview)
+        onSubmit(creatingReviewTextNames)
     }
 
 
