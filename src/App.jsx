@@ -9,27 +9,30 @@ import ReviewModal from './Components/ReviewModal'
 import StatSection from './Components/StatSection'
 import { useNavigate } from 'react-router'
 
-
-
-
+const abortController = new AbortController()
 const apiKey = 'sb_publishable_9qhBP--rQvNZ3G9lzPtYXg_qRRPpByS'
+
 function App() {
 
     const submitUserReview = async (review) => {
         try {
-            await fetch('https://wuhbloysiszrtkjsigmo.supabase.co/rest/v1/Reviews', {
+            let response = await fetch('https://wuhbloysiszrtkjsigmo.supabase.co/rest/v1/Reviews', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'apikey': apiKey
 
                 },
-                body: JSON.stringify(review)
+                body: JSON.stringify(review),
+
             })
-        } catch {
-            alert('Error adding review: ' + error);
-        } finally {
+            if (!response.ok) {
+                throw new Error(await response.text())
+            }
             closeModalHandler()
+            
+        } catch (error) {
+            alert(`Error adding review:${error.message}`);
         }
     }
     const navigate = useNavigate()
