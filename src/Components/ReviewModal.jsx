@@ -1,18 +1,20 @@
 import isFormEmpty from "../utils.js/isFormEmpty"
-export default function ReviewModal({ onClose, onSubmit }) {
 
-    const fieldNames = {
+const fieldNames = {
         game: 'Game',
         rating: 'Rating',
         pros: 'Pros',
         cons: 'Cons',
         verdict: 'Your take'
     }
+    
+export default function ReviewModal({ onClose, onSubmit }) {
+
+   
 
     function submitHandler(e) {
         e.preventDefault()
         const form = new FormData(e.target)
-        
         const creatingReviewTextNames = {
             game: form.get('game-title'),
             rating: form.get('rating'),

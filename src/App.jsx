@@ -8,7 +8,7 @@ import HowSection from './Components/HowSection'
 import ReviewModal from './Components/ReviewModal'
 import StatSection from './Components/StatSection'
 import { useNavigate } from 'react-router'
-import fetchRequest from './API/fetchRequest'
+import fetchRequest from './API/fetchRequestToOurDB'
 
 const apiKey = 'sb_publishable_9qhBP--rQvNZ3G9lzPtYXg_qRRPpByS'
 
