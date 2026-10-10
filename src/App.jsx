@@ -8,53 +8,47 @@ import HowSection from './Components/HowSection'
 import ReviewModal from './Components/ReviewModal'
 import StatSection from './Components/StatSection'
 import { useNavigate } from 'react-router'
-import getRecentReviews from './API/getRecentReviews'
+import fetchRequest from './API/fetchRequest'
 
 const apiKey = 'sb_publishable_9qhBP--rQvNZ3G9lzPtYXg_qRRPpByS'
 
 function App() {
 
     const [reviews, setReviews] = useState([])
+    const [showReviewModal, setShowReviewModal] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        async function loadReviews() {
-            const data = await getRecentReviews()
-            setReviews(data)
+        async function loadRecentReviews() {
+            let recentReviews = await fetchRequest('/Reviews?select=*&order=created_at.desc&limit=3')
+                .then(response => response.json())
+                .then(data => { return data })
+            setReviews(recentReviews)
         }
-        loadReviews()
+        loadRecentReviews()
     }, [])
 
     const submitUserReview = async (review) => {
         try {
-            let response = await fetch('https://wuhbloysiszrtkjsigmo.supabase.co/rest/v1/Reviews', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': apiKey
+            await fetchRequest('/Reviews', 'POST', review)
+            const freshReviews = await fetchRequest('/Reviews?select=*&order=created_at.desc&limit=3')
+                .then(response => response.json())
 
-                },
-                body: JSON.stringify(review),
-
-            })
-            if (!response.ok) {
-                throw new Error(await response.text())
-            }
+            setReviews(freshReviews)
             closeModalHandler()
-
         } catch (error) {
             alert(`Error adding review:${error.message}`);
         }
     }
-    const navigate = useNavigate()
-    const [showReviewModal, setShowReviewModal] = useState(false)
+
     const closeModalHandler = () => {
         setShowReviewModal(false)
         navigate('/')
     }
+
     const createReview = () => {
         setShowReviewModal(true)
     }
-
 
 
 

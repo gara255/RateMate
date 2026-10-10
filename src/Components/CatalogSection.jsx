@@ -1,5 +1,5 @@
 import ReviewCard from "./ReviewCard";
-
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function CatalogSection({ reviews }) {
 
@@ -15,18 +15,20 @@ export default function CatalogSection({ reviews }) {
                 </div>
 
                 <div className="review-grid">
-                    {reviews.map(review => (
-                        <ReviewCard
-                            key={review.id}
-                            game={review.game}
-                            rating={review.rating}
-                            pros={review.pros}
-                            cons={review.cons}
-                            verdict={review.verdict}
-                        />
-                        
-                    ))}
-
+                    <AnimatePresence>
+                        {reviews.map(review => (
+                            <motion.div
+                                key={review.id}
+                                layout
+                                initial={{ opacity: 0, x: -30 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 30 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <ReviewCard {...review} />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </div>
             </div>
         </section>

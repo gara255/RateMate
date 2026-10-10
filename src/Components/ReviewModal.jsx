@@ -11,7 +11,8 @@ export default function ReviewModal({ onClose, onSubmit }) {
 
     function submitHandler(e) {
         e.preventDefault()
-
+        const form = new FormData(e.target)
+        
         const creatingReviewTextNames = {
             game: form.get('game-title'),
             rating: form.get('rating'),
@@ -19,8 +20,6 @@ export default function ReviewModal({ onClose, onSubmit }) {
             cons: form.get('cons'),
             verdict: form.get('verdict')
         }
-
-        const form = new FormData(e.target)
 
         let result = isFormEmpty(creatingReviewTextNames)
 
@@ -31,8 +30,6 @@ export default function ReviewModal({ onClose, onSubmit }) {
 
         onSubmit(creatingReviewTextNames)
     }
-
-
 
     return (
         <div className="modal-backdrop" onClick={onClose}>

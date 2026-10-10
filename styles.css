@@ -99,7 +99,9 @@
     }
 
     .nav-links a:hover,
-    .nav-links a:focus-visible {
+    .nav-links a:focus-visible,
+    .search-icon-btn:hover,
+    .nav-cta:hover{
       color: var(--ink);
     }
 
@@ -117,8 +119,8 @@
 
     .nav-cta:focus-visible,
     button:focus-visible,
-    a:focus-visible,
-    input:focus-visible {
+    a:focus-visible
+     {
       outline: 2px solid var(--teal);
       outline-offset: 2px;
     }
