@@ -1,16 +1,23 @@
+import fetchRequestRawg from "../API/fetchRequestRAWG"
 import isFormEmpty from "../utils.js/isFormEmpty"
+import { useState, useEffect } from "react"
 
 const fieldNames = {
-        game: 'Game',
-        rating: 'Rating',
-        pros: 'Pros',
-        cons: 'Cons',
-        verdict: 'Your take'
-    }
-    
+    game: 'Game',
+    rating: 'Rating',
+    pros: 'Pros',
+    cons: 'Cons',
+    verdict: 'Your take'
+}
+
+
 export default function ReviewModal({ onClose, onSubmit }) {
 
-   
+    const [search, setSearch] = useState('')
+    const [results, setResults] = useState([])
+    const [selected, setSelected] = useState(false)
+    const [mouseDownOnBackdrop, setMouseDownOnBackdrop] = useState(false)
+
 
     function submitHandler(e) {
         e.preventDefault()
@@ -33,8 +40,47 @@ export default function ReviewModal({ onClose, onSubmit }) {
         onSubmit(creatingReviewTextNames)
     }
 
+    const selectGame = (game) => {
+        setSearch(game.name)
+        setResults([])
+        setSelected(true)
+    }
+    let handleSearch = (e) => {
+        setSearch(e.target.value)
+        setSelected(false)
+
+    }
+    useEffect(() => {
+        if (selected) return
+
+        const timer = setTimeout(() => {
+            fetchRequestRawg(search)
+                .then(res => res.json())
+                .then(data => {
+                    const objOfResults = data.results.map(game => ({
+                        name: game.name,
+                        background_image: game.background_image,
+                        id: game.id
+                    }))
+                    setResults(objOfResults)
+                })
+        }, 400)
+
+        return () => clearTimeout(timer)
+    }, [search, selected])
+
+
+
     return (
-        <div className="modal-backdrop" onClick={onClose}>
+        <div
+            className="modal-backdrop"
+            onMouseDown={(e) => setMouseDownOnBackdrop(e.target === e.currentTarget)}
+            onMouseUp={(e) => {
+                if (mouseDownOnBackdrop && e.target === e.currentTarget) {
+                    onClose()
+                }
+            }}
+        >
             {/* e.stopPropagation to stop closing the review modal on any click */}
             <div className="modal-card" role="dialog" aria-labelledby="modal-title" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
@@ -44,14 +90,28 @@ export default function ReviewModal({ onClose, onSubmit }) {
                     </button>
                 </div>
                 <form className="review-form" onSubmit={submitHandler}>
-                    <div className="form-group">
-                        <label htmlFor="game-title" >Game</label>
+                    <div className="form-group search-wrap">
+                        <label htmlFor="game-title">Game</label>
                         <input
                             type="text"
                             id="game-title"
                             placeholder="Search and select a game..."
                             name="game-title"
+                            value={search}
+                            onChange={handleSearch}
+                            autoComplete="off"
                         />
+
+                        {search.length > 0 && !selected && (
+                            <ul className="suggestions-dropdown">
+                                {results.map(game => (
+                                    <li key={game.id} onClick={() => selectGame(game)}>
+                                        <span>{game.name}</span>
+                                        <img src={game.background_image} alt={game.name} />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                     <div className="form-group">
                         <label htmlFor="rating">Rating</label>
@@ -123,4 +183,4 @@ export default function ReviewModal({ onClose, onSubmit }) {
         </div>
 
     )
-}
+} 
