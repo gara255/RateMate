@@ -6,7 +6,7 @@ export default function HeroSection({ onClick }) {
     return (
         <section className="hero wrap">
             <div>
-                <h1>Say what you actually thought of the game.</h1>
+                <h1>Glaze the greatness. Expose the garbage.</h1>
                 <p className="lede">Post a review, score it honestly, lay out the pros and cons — then let people react the way they would in your Discord, not with a star rating nobody reads.</p>
                 <div className="hero-actions">
                     <a className="btn-primary">Browse reviews</a>

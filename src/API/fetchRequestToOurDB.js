@@ -1,5 +1,5 @@
-const apiKey = 'sb_publishable_9qhBP--rQvNZ3G9lzPtYXg_qRRPpByS'
-const url = 'https://wuhbloysiszrtkjsigmo.supabase.co/rest/v1'
+const apiKey = import.meta.env.VITE_SUPABASE_KEY
+const url = import.meta.env.VITE_SUPABASE_URL
 
 export default async function fetchRequest(path = '/', method = 'GET', data = null) {
     const options = {
