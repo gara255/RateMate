@@ -1,5 +1,9 @@
-export default function HeroSection({ onClick }) {
+import { useNavigate } from "react-router"
 
+export default function HeroSection({ onClick }) {
+const navigate = useNavigate()
+
+    const handleBrowse = () => {navigate('/Catalog')}
 
 
     return (
@@ -8,7 +12,7 @@ export default function HeroSection({ onClick }) {
                 <h1>Glaze the greatness. Expose the garbage.</h1>
                 <p className="lede">Post a review, score it honestly, lay out the pros and cons — then let people react the way they would in your Discord, not with a star rating nobody reads.</p>
                 <div className="hero-actions">
-                    <a className="btn-primary">Browse reviews</a>
+                    <a className="btn-primary" onClick = {handleBrowse}>Browse reviews</a>
                     <button className="btn-ghost" onClick={onClick}>Write your first one</button>
                 </div>
             </div>

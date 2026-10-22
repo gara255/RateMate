@@ -3,7 +3,9 @@ export default function ReviewCard({ game, rating, pros, cons, verdict, backgrou
 
     return (
         <article className="card">
-            <div className="card-cover">{<img src ={background_image} alt = {game}/>}</div>
+            <div className="card-cover">{background_image
+    ? <img src={background_image} alt={game} />
+    : "cover art"}</div>
             <div className="card-top">
                 <div>
                     <h3>{game}</h3>

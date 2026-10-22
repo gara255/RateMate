@@ -5,7 +5,7 @@ export default function Header() {
     return (
         <header>
             <nav className="wrap">
-                <div className="logo">Rate<span>Mate</span></div>
+                <Link to ="/" className="logo">Rate<span>Mate</span></Link>
                 <div className="nav-links">
                     <Link to="/">Home</Link>
                     <Link to="/Catalog">Catalog</Link>

@@ -80,6 +80,7 @@
       display: flex;
       align-items: baseline;
       gap: 2px;
+      text-decoration: none;
     }
 
     .logo span {
@@ -380,20 +381,20 @@
       max-width: 42ch;
     }
 
-    .reviewGrid {
+    .review-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
     @media (max-width: 920px) {
-      .reviewGrid {
+      .review-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (max-width: 620px) {
-      .reviewGrid {
+      .review-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -414,6 +415,7 @@
       text-decoration: none;
       color: inherit;
       display: block;
+      height: 100%;
     }
 
     .card-top {

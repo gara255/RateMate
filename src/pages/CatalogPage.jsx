@@ -12,10 +12,10 @@ export default function CatalogPage() {
     const [page, setPage] = useState(1)
     const [hasNextPage, setHasNextPage] = useState(false)
 
+    
     useEffect(() => {
         async function loadReviews() {
             const offset = (page - 1) * PAGE_SIZE
-            // искаме 1 запис повече, за да знаем дали има следваща страница
             const data = await fetchRequest(
                 `/Reviews?select=*&order=created_at.desc&limit=${PAGE_SIZE + 1}&offset=${offset}`
             ).then(res => res.json())
