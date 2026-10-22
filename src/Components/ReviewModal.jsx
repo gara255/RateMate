@@ -16,6 +16,7 @@ export default function ReviewModal({ onClose, onSubmit }) {
     const [search, setSearch] = useState('')
     const [results, setResults] = useState([])
     const [selected, setSelected] = useState(false)
+    const [coverImage, setCoverImage] = useState('')
     const [mouseDownOnBackdrop, setMouseDownOnBackdrop] = useState(false)
 
 
@@ -28,27 +29,29 @@ export default function ReviewModal({ onClose, onSubmit }) {
             pros: form.get('pros'),
             cons: form.get('cons'),
             verdict: form.get('verdict')
+            
         }
 
         let result = isFormEmpty(creatingReviewTextNames)
-        console.log(result);
 
 
         if (result.isEmpty) {
             const missingFields = result.keys.map(key => fieldNames[key]).join(', ')
-            console.log(missingFields)
             return result.keys > 1 ? alert(`Please fill the fields: ${missingFields}`) : alert(`Please fill the field "${missingFields}"`)
         }
 
 
-        onSubmit(creatingReviewTextNames)
+        onSubmit({...creatingReviewTextNames,background_image: coverImage}) //sending the form obj + game image
     }
 
     const selectGame = (game) => {
         setSearch(game.name)
         setResults([])
+        setCoverImage(game.background_image)
         setSelected(true)
+        
     }
+
     let handleSearch = (e) => {
         setSearch(e.target.value)
         setSelected(false)

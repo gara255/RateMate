@@ -11,7 +11,6 @@ export default function HomePage() {
 
     const [reviews, setReviews] = useState([])
     const [showReviewModal, setShowReviewModal] = useState(false)
-    const navigate = useNavigate()
 
     useEffect(() => {
         async function loadRecentReviews() {

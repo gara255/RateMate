@@ -25,7 +25,7 @@ export default function CatalogSection({reviews}) {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: 30 }}
                                 transition={{ duration: 0.3 }}
-                            ><Link to={`/Reviews/${review.id}`} className="card-link"><ReviewCard {...review} /></Link>
+                            ><Link to={`/Catalog/${review.id}`} className="card-link"><ReviewCard {...review} /></Link>
                             </motion.div>
                         ))}
                     </AnimatePresence>

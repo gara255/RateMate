@@ -34,17 +34,16 @@ export default function CatalogPage() {
                 </div>
 
                 <div className={styles.reviewGrid}>
-                    <AnimatePresence>
+                    <AnimatePresence mode="popLayout">
                         {reviews.map(review => (
                             <motion.div
                                 key={review.id}
-                                layout
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 30 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Link to={`/Reviews/${review.id}`} className={styles.cardLink}>
+                                <Link to={`/Catalog/${review.id}`} className={styles.cardLink}>
                                     <ReviewCard {...review} />
                                 </Link>
                             </motion.div>
@@ -53,19 +52,21 @@ export default function CatalogPage() {
                 </div>
 
                 <div className={styles.pagination}>
-                    <button
-                        disabled={page === 1}
-                        onClick={() => setPage(p => p - 1)}
-                    >
-                        Previous
-                    </button>
-                    <span>Page {page}</span>
-                    <button
-                        disabled={!hasNextPage}
-                        onClick={() => setPage(p => p + 1)}
-                    >
-                        Next
-                    </button>
+                    <div className={styles.pagination}>
+                        <button
+                            disabled={page === 1}
+                            onClick={() => setPage(p => p - 1)}
+                        >
+                            ← Previous
+                        </button>
+                        <span>Page {page}</span>
+                        <button
+                            disabled={!hasNextPage}
+                            onClick={() => setPage(p => p + 1)}
+                        >
+                            Next →
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
