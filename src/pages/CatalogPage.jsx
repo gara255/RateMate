@@ -12,18 +12,33 @@ export default function CatalogPage() {
     const [page, setPage] = useState(1)
     const [hasNextPage, setHasNextPage] = useState(false)
 
-    
-    useEffect(() => {
-        async function loadReviews() {
-            const offset = (page - 1) * PAGE_SIZE
-            const data = await fetchRequest(
-                `/Reviews?select=*&order=created_at.desc&limit=${PAGE_SIZE + 1}&offset=${offset}`
-            ).then(res => res.json())
 
-            setHasNextPage(data.length > PAGE_SIZE)
-            setReviews(data.slice(0, PAGE_SIZE))
+
+    useEffect(() => {
+        const abortController = new AbortController()
+
+        async function loadReviews() {
+            try {
+                const offset = (page - 1) * PAGE_SIZE
+                const data = await fetchRequest(
+                    `/Reviews?select=*&order=created_at.desc&limit=${PAGE_SIZE + 1}&offset=${offset}`,
+                    'GET',
+                    null,
+                    abortController.signal
+                ).then(res => res.json())
+
+                setHasNextPage(data.length > PAGE_SIZE)
+                setReviews(data.slice(0, PAGE_SIZE))
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error(error)
+                }
+            }
         }
+
         loadReviews()
+
+        return () => abortController.abort()
     }, [page])
 
     return (

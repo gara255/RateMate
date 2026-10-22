@@ -1,7 +1,7 @@
 const apiKey = import.meta.env.VITE_SUPABASE_KEY
 const url = import.meta.env.VITE_SUPABASE_URL
 
-export default async function fetchRequest(path = '/', method = 'GET', data = null) {
+export default async function fetchRequest(path = '/', method = 'GET', data = null, signal = null) {
     const options = {
         headers: {
             apiKey,
@@ -13,6 +13,9 @@ export default async function fetchRequest(path = '/', method = 'GET', data = nu
     if (data) {
         options.headers['Content-Type'] = 'application/json'
         options.body = JSON.stringify(data)
+    }
+     if (signal) {
+        options.signal = signal
     }
     const response = await fetch(`${url}${path}`, options)
 
