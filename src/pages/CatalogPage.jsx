@@ -5,24 +5,32 @@ import ReviewCard from "../Components/ReviewCard"
 import fetchRequest from "../API/fetchRequestToOurDB"
 import styles from "./CatalogPage.module.css"
 
+const PAGE_SIZE = 12
+
 export default function CatalogPage() {
     const [reviews, setReviews] = useState([])
+    const [page, setPage] = useState(1)
+    const [hasNextPage, setHasNextPage] = useState(false)
 
     useEffect(() => {
-        async function loadAllReviews() {
-            const data = await fetchRequest('/Reviews?select=*&order=created_at.desc')
-                .then(res => res.json())
-            setReviews(data)
+        async function loadReviews() {
+            const offset = (page - 1) * PAGE_SIZE
+            // искаме 1 запис повече, за да знаем дали има следваща страница
+            const data = await fetchRequest(
+                `/Reviews?select=*&order=created_at.desc&limit=${PAGE_SIZE + 1}&offset=${offset}`
+            ).then(res => res.json())
+
+            setHasNextPage(data.length > PAGE_SIZE)
+            setReviews(data.slice(0, PAGE_SIZE))
         }
-        loadAllReviews()
-    }, [])
+        loadReviews()
+    }, [page])
 
     return (
         <section className={styles.section}>
             <div className={styles.wrap}>
                 <div className={styles.sectionHead}>
                     <h2>All reviews</h2>
-                    <p>Every review the catalog has, newest first.</p>
                 </div>
 
                 <div className={styles.reviewGrid}>
@@ -42,6 +50,22 @@ export default function CatalogPage() {
                             </motion.div>
                         ))}
                     </AnimatePresence>
+                </div>
+
+                <div className={styles.pagination}>
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage(p => p - 1)}
+                    >
+                        Previous
+                    </button>
+                    <span>Page {page}</span>
+                    <button
+                        disabled={!hasNextPage}
+                        onClick={() => setPage(p => p + 1)}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </section>
