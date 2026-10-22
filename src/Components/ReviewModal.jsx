@@ -31,9 +31,13 @@ export default function ReviewModal({ onClose, onSubmit }) {
         }
 
         let result = isFormEmpty(creatingReviewTextNames)
+        console.log(result);
+
 
         if (result.isEmpty) {
-            return alert(`Please fill the field "${fieldNames[result.key]}"`)
+            const missingFields = result.keys.map(key => fieldNames[key]).join(', ')
+            console.log(missingFields)
+            return result.keys > 1 ? alert(`Please fill the fields: ${missingFields}`) : alert(`Please fill the field "${missingFields}"`)
         }
 
 

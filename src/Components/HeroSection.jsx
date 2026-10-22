@@ -10,7 +10,7 @@ export default function HeroSection({ onClick }) {
                 <p className="lede">Post a review, score it honestly, lay out the pros and cons — then let people react the way they would in your Discord, not with a star rating nobody reads.</p>
                 <div className="hero-actions">
                     <a className="btn-primary">Browse reviews</a>
-                    <Link to="/Write-review" className="btn-ghost" onClick={onClick}>Write your first one</Link>
+                    <button className="btn-ghost" onClick={onClick}>Write your first one</button>
                 </div>
             </div>
             <div className="hero-art">

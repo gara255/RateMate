@@ -1,0 +1,36 @@
+.section {
+    padding: 80px 0;
+}
+
+.wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.sectionHead {
+    margin-bottom: 40px;
+}
+
+.sectionHead h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    color: var(--ink);
+}
+
+.sectionHead p {
+    color: var(--ink-dim);
+    margin-top: 8px;
+}
+
+.reviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
