@@ -2,8 +2,7 @@ import ReviewCard from "./ReviewCard";
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from "react-router";
 
-
-export default function CatalogSection({ reviews }) {
+export default function CatalogSection({reviews}) {
 
     return (
         <section className="section" id="catalog">
@@ -13,7 +12,7 @@ export default function CatalogSection({ reviews }) {
                         <h2>Recent reviews</h2>
                         <p>Pulled straight from the catalog — pros, cons, and what people actually clicked on.</p>
                     </div>
-                    <a  className="btn-ghost">View all</a>
+                    <a className="btn-ghost">View all</a>
                 </div>
 
                 <div className="review-grid">
@@ -26,8 +25,7 @@ export default function CatalogSection({ reviews }) {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: 30 }}
                                 transition={{ duration: 0.3 }}
-                            ><Link to={`/Reviews/${review.id}`} className= "card-link"><ReviewCard {...review} /></Link>
-                                  
+                            ><Link to={`/Reviews/${review.id}`} className="card-link"><ReviewCard {...review} /></Link>
                             </motion.div>
                         ))}
                     </AnimatePresence>
