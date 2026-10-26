@@ -12,13 +12,23 @@ export default function HomePage() {
     const { auth } = useAuth()
     const navigate = useNavigate()
     const [reviews, setReviews] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [loadError, setLoadError] = useState('')
     const [showReviewModal, setShowReviewModal] = useState(false)
 
     useEffect(() => {
         async function loadRecentReviews() {
-            let recentReviews = await fetchRequest('/Reviews?select=*&order=created_at.desc&limit=3')
-                .then(response => response.json())
-            setReviews(recentReviews)
+            setLoading(true)
+            setLoadError('')
+            try {
+                const recentReviews = await fetchRequest('/Reviews?select=*&order=created_at.desc&limit=3')
+                    .then(response => response.json())
+                setReviews(recentReviews)
+            } catch (error) {
+                setLoadError("Couldn't load recent reviews. Please try again later.")
+            } finally {
+                setLoading(false)
+            }
         }
         loadRecentReviews()
     }, [])
@@ -38,7 +48,7 @@ export default function HomePage() {
             setReviews(freshReviews)
             closeModalHandler()
         } catch (error) {
-            alert(`Error adding review:${error.message}`)
+            alert(`Error adding review: ${error.message}`)
         }
     }
 
@@ -57,7 +67,9 @@ export default function HomePage() {
             <HeroSection onClick={createReview} />
             {showReviewModal && <ReviewModal onClose={closeModalHandler} onSubmit={submitUserReview} />}
             <StatSection />
-            <CatalogSection reviews={reviews} />
+            {loading && <p className="wrap">Loading reviews...</p>}
+            {loadError && <p className="wrap" style={{ color: "var(--bad, #ff8b91)" }}>{loadError}</p>}
+            {!loading && !loadError && <CatalogSection reviews={reviews} />}
             <HowSection />
         </>
     )

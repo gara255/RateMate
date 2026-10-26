@@ -27,12 +27,24 @@ export default function ReviewDetailsPage() {
 
     useEffect(() => {
         async function loadReview() {
-            const data = await fetchRequest(`/Reviews?select=*&id=eq.${id}`).then(res => res.json())
-            setReview(data[0])
+            setLoadError('')
+            try {
+                const data = await fetchRequest(`/Reviews?select=*&id=eq.${id}`).then(res => res.json())
+                if (data.length === 0) {
+                    setLoadError("This review doesn't exist.")
+                    return
+                }
+                setReview(data[0])
+            } catch (error) {
+                setLoadError("Couldn't load this review. Please try again later.")
+            }
         }
         loadReview()
         loadReactions()
     }, [id])
+
+    if (loadError) return <p className="wrap" style={{ color: "var(--bad, #ff8b91)" }}>{loadError}</p>
+    if (!review) return <p className="wrap">Loading...</p>
 
     async function loadReactions() {
         const rows = await fetchRequest(`/Reactions?select=*&review_id=eq.${id}`).then(res => res.json())

@@ -12,11 +12,15 @@ export default function CatalogPage() {
     const [reactionsMap, setReactionsMap] = useState({})
     const [page, setPage] = useState(1)
     const [hasNextPage, setHasNextPage] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [loadError, setLoadError] = useState('')
 
     useEffect(() => {
         const abortController = new AbortController()
 
         async function loadReviews() {
+            setLoading(true)
+            setLoadError('')
             try {
                 const offset = (page - 1) * PAGE_SIZE
                 const data = await fetchRequest(
@@ -48,8 +52,10 @@ export default function CatalogPage() {
                 }
             } catch (error) {
                 if (error.name !== 'AbortError') {
-                    console.error(error)
+                    setLoadError("Couldn't load reviews. Please try again later.")
                 }
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -65,29 +71,36 @@ export default function CatalogPage() {
                     <h2>All reviews</h2>
                 </div>
 
-                <div className={styles.reviewGrid}>
-                    <AnimatePresence mode="popLayout">
-                        {reviews.map(review => (
-                            <motion.div
-                                key={review.id}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <Link to={`/Catalog/${review.id}`} className={styles.cardLink}>
-                                    <ReviewCard {...review} reactions={reactionsMap[review.id] || {}} />
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </div>
+                {loading && <p>Loading reviews...</p>}
+                {loadError && <p style={{ color: "var(--bad, #ff8b91)" }}>{loadError}</p>}
 
-                <div className={styles.pagination}>
-                    <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>← Previous</button>
-                    <span>Page {page}</span>
-                    <button disabled={!hasNextPage} onClick={() => setPage(p => p + 1)}>Next →</button>
-                </div>
+                {!loading && !loadError && (
+                    <>
+                        <div className={styles.reviewGrid}>
+                            <AnimatePresence mode="popLayout">
+                                {reviews.map(review => (
+                                    <motion.div
+                                        key={review.id}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <Link to={`/Catalog/${review.id}`} className={styles.cardLink}>
+                                            <ReviewCard {...review} reactions={reactionsMap[review.id] || {}} />
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+
+                        <div className={styles.pagination}>
+                            <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>← Previous</button>
+                            <span>Page {page}</span>
+                            <button disabled={!hasNextPage} onClick={() => setPage(p => p + 1)}>Next →</button>
+                        </div>
+                    </>
+                )}
             </div>
         </section>
     )
