@@ -14,27 +14,20 @@ import LoginPage from './pages/LoginPage'
 function App() {
     const [auth, setAuth] = useState()
 
-
-
     return (
-        <>
-            <AuthContext.Provider value={{ auth, setAuth }}>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/Write-review" element={<HomePage />} />
-                    <Route path="/Catalog/" element={<CatalogPage />} />
-                    <Route path="/Catalog/:id" element={<CatalogPage />} />
-                    <Route path="/Register/" element={<RegisterPage />} />
-                    <Route path="/Login" element={<LoginPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-
-                </Routes>
-                <Footer />
-            </AuthContext.Provider >
-
-        </>
-
+        <AuthContext.Provider value={{ auth, setAuth }}>
+            <Header />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/Write-review" element={<HomePage />} />
+                <Route path="/Catalog" element={<CatalogPage />} />
+                <Route path="/Catalog/:id" element={<ReviewDetailsPage />} />
+                <Route path="/Register" element={<RegisterPage />} />
+                <Route path="/Login" element={<LoginPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <Footer />
+        </AuthContext.Provider>
     )
 }
 

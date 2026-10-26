@@ -4,12 +4,12 @@ export default function ReviewCard({ game, rating, pros, cons, verdict, backgrou
     return (
         <article className="card">
             <div className="card-cover">{background_image
-    ? <img src={background_image} alt={game} />
-    : "cover art"}</div>
+                ? <img src={background_image} alt={game} />
+                : "cover art"}</div>
             <div className="card-top">
                 <div>
                     <h3>{game}</h3>
-                    <div className="by">Add User</div>
+                    <div className="by">{author_username || "Anonymous"}</div>
                 </div>
                 <div className="score">{rating}</div>
             </div>
