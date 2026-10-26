@@ -9,10 +9,9 @@ const PAGE_SIZE = 12
 
 export default function CatalogPage() {
     const [reviews, setReviews] = useState([])
+    const [reactionsMap, setReactionsMap] = useState({})
     const [page, setPage] = useState(1)
     const [hasNextPage, setHasNextPage] = useState(false)
-
-
 
     useEffect(() => {
         const abortController = new AbortController()
@@ -28,7 +27,25 @@ export default function CatalogPage() {
                 ).then(res => res.json())
 
                 setHasNextPage(data.length > PAGE_SIZE)
-                setReviews(data.slice(0, PAGE_SIZE))
+                const pageReviews = data.slice(0, PAGE_SIZE)
+                setReviews(pageReviews)
+
+                if (pageReviews.length > 0) {
+                    const ids = pageReviews.map(r => r.id).join(',')
+                    const reactionRows = await fetchRequest(
+                        `/Reactions?select=review_id,type&review_id=in.(${ids})`,
+                        'GET',
+                        null,
+                        abortController.signal
+                    ).then(res => res.json())
+
+                    const map = {}
+                    reactionRows.forEach(row => {
+                        if (!map[row.review_id]) map[row.review_id] = {}
+                        map[row.review_id][row.type] = (map[row.review_id][row.type] || 0) + 1
+                    })
+                    setReactionsMap(map)
+                }
             } catch (error) {
                 if (error.name !== 'AbortError') {
                     console.error(error)
@@ -59,7 +76,7 @@ export default function CatalogPage() {
                                 transition={{ duration: 0.3 }}
                             >
                                 <Link to={`/Catalog/${review.id}`} className={styles.cardLink}>
-                                    <ReviewCard {...review} />
+                                    <ReviewCard {...review} reactions={reactionsMap[review.id] || {}} />
                                 </Link>
                             </motion.div>
                         ))}
@@ -67,21 +84,9 @@ export default function CatalogPage() {
                 </div>
 
                 <div className={styles.pagination}>
-                    <div className={styles.pagination}>
-                        <button
-                            disabled={page === 1}
-                            onClick={() => setPage(p => p - 1)}
-                        >
-                            ← Previous
-                        </button>
-                        <span>Page {page}</span>
-                        <button
-                            disabled={!hasNextPage}
-                            onClick={() => setPage(p => p + 1)}
-                        >
-                            Next →
-                        </button>
-                    </div>
+                    <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>← Previous</button>
+                    <span>Page {page}</span>
+                    <button disabled={!hasNextPage} onClick={() => setPage(p => p + 1)}>Next →</button>
                 </div>
             </div>
         </section>

@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { AuthContext } from './context/AuthContext'
 import LoginPage from './pages/LoginPage'
 import ReviewDetailsPage from './Components/ReviewDetailsModal'
+import ProfilePage from './pages/ProfilePage'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/Catalog/:id" element={<ReviewDetailsPage />} />
                 <Route path="/Register" element={<RegisterPage />} />
                 <Route path="/Login" element={<LoginPage />} />
+                <Route path="/Profile/:userId" element={<ProfilePage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />

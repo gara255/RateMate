@@ -714,3 +714,20 @@
       overflow-wrap: break-word;
       word-break: break-word;
     }
+
+    .nav-user {
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--bg-raised);
+      border: 1px solid var(--line);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-user:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }

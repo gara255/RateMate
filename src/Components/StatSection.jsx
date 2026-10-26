@@ -1,27 +1,30 @@
+// src/Components/StatSection.jsx
 import { useEffect, useState } from "react"
 import fetchRequest from "../API/fetchRequestToOurDB"
 
 export default function StatSection() {
-
     const [reviewNum, setReviewNum] = useState()
+    const [reactionNum, setReactionNum] = useState()
 
     useEffect(() => {
-        async function loadCount() {
-            const currentReviewsNum = await fetchRequest('/Reviews?select=*')
+        async function loadCounts() {
+            const reviewsData = await fetchRequest('/Reviews?select=*')
                 .then(res => res.json())
-                .then(data => data.length)
+            setReviewNum(reviewsData.length)
 
-            setReviewNum(currentReviewsNum)
+            const reactionsData = await fetchRequest('/Reactions?select=*')
+                .then(res => res.json())
+            setReactionNum(reactionsData.length)
         }
-        loadCount()
+        loadCounts()
     }, [])
 
     return (
         <div className="stat-strip">
             <div className="wrap">
-                <div><strong>{reviewNum}</strong>reviews posted</div>
-                <div><strong>38</strong> DELETE OR CHAGE IT</div>
-                <div><strong>🔥💀👍</strong>reactions, not stars</div>
+                <div><strong>{reviewNum}</strong> reviews posted</div>
+                <div><strong>{reactionNum}</strong> reactions given</div>
+                <div><strong>🔥💀🤝</strong> reactions, not stars</div>
             </div>
         </div>
     )

@@ -23,11 +23,27 @@ export default function RegisterPage() {
         e.preventDefault()
         setError('')
 
-        if (formData.username.trim() === '' || formData.email.trim() === '' || formData.password.trim() === '') {
+        const { username, email, password } = formData
+
+        if (username.trim() === '' || email.trim() === '' || password.trim() === '') {
             return setError('All fields are required.')
         }
+
+        if (username.trim().length < 3) {
+            return setError('Username must be at least 3 characters.')
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email.trim())) {
+            return setError('Please enter a valid email address.')
+        }
+
+        if (password.length < 8) {
+            return setError('Password must be at least 8 characters.')
+        }
+
         try {
-            const response = await register(formData.username, formData.email, formData.password)
+            const response = await register(username, email, password)
             const user = await response.json()
             setAuth(user)
             navigate("/")

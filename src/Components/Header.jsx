@@ -1,4 +1,3 @@
-// src/Components/Header.jsx
 import { Link, useNavigate } from "react-router"
 import useAuth from "../hooks/useAuth"
 
@@ -22,7 +21,10 @@ export default function Header() {
 
                 {auth?.user ? (
                     <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                        <span>{auth.user.user_metadata?.username || auth.user.email}</span>
+
+                        <Link to={`/Profile/${auth.user.id}`} className="nav-user">
+                            {auth.user.user_metadata?.username || auth.user.email}
+                        </Link>
                         <button className="nav-cta" onClick={handleLogout}>Log out</button>
                     </div>
                 ) : (

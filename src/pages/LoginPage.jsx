@@ -25,12 +25,19 @@ function LoginPage() {
         e.preventDefault()
         setError("")
 
-        if (formData.email.trim() === "" || formData.password.trim() === "") {
+        const { email, password } = formData
+
+        if (email.trim() === "" || password.trim() === "") {
             return setError("All fields are required.")
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email.trim())) {
+            return setError("Please enter a valid email address.")
+        }
+
         try {
-            const response = await login(formData.email, formData.password)
+            const response = await login(email, password)
             const loggedUser = await response.json()
             setAuth(loggedUser)
             navigate("/")
