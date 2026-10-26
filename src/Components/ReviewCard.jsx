@@ -12,11 +12,11 @@ export default function ReviewCard({ game, rating, pros, cons, verdict, backgrou
                 <div className="score">{rating}</div>
             </div>
             <div className="pc-row">
-                <p className="pros"><strong>Pros: {pros}</strong></p>
-                <p className="cons"><strong>Cons: {cons}</strong></p>
+                <p className="pros"><strong>Pros:</strong> {pros}</p>
+                <p className="cons"><strong>Cons:</strong> {cons}</p>
             </div>
             <div className="verdict">
-                <strong>Personal Take: {verdict}</strong>
+                <strong style={{ color: "var(--teal)" }}>Personal Take:</strong> <span style={{ color: "var(--ink)" }}>{verdict}</span>
             </div>
             <div className="reactions">
                 <span className="pill">🔥 {reactions.fire || 0}</span>

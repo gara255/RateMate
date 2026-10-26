@@ -15,10 +15,6 @@ export default function Header() {
     }
 
     const openWriteReview = () => {
-        if (!auth?.user) {
-            navigate('/Register')
-            return
-        }
         setShowReviewModal(true)
     }
 
@@ -51,10 +47,11 @@ export default function Header() {
                     </div>
 
                     <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                        <button className="nav-write-btn" onClick={openWriteReview}>Write a review</button>
+                        
 
                         {auth?.user ? (
                             <div style={{ display: "flex", gap: "10px", alignItems: "center", marginLeft: "16px" }}>
+                                <button className="nav-write-btn" onClick={openWriteReview}>Write a review</button>
                                 <Link to={`/Profile/${auth.user.id}`} className="nav-user">
                                     {auth.user.user_metadata?.username || auth.user.email}
                                 </Link>
