@@ -1,8 +1,14 @@
 const apiKey = import.meta.env.VITE_SUPABASE_KEY
 const url = import.meta.env.VITE_SUPABASE_URL
+const authUrl = import.meta.env.VITE_SUPABASE_AUTH_URL
 
 export default async function fetchRequest(path = '/', method = 'GET', data = null, signal = null) {
-    const options = {
+   return baseRequest(url, path, method, data, signal)
+
+}
+
+async function baseRequest(url, path = '/', method = 'GET', data = null, signal = null) {
+ const options = {
         headers: {
             apiKey,
         }
@@ -24,5 +30,8 @@ export default async function fetchRequest(path = '/', method = 'GET', data = nu
     }
 
     return response
+}
+export const authRequest = async (path = '/', method = 'GET', data = null, signal = null) => {
+    return baseRequest(authUrl, path, method, data, signal)
 }
 

@@ -40,6 +40,7 @@ export default function HomePage() {
 
     return (
         <>
+        
             <HeroSection onClick={createReview} />
 
             {showReviewModal && <ReviewModal onClose={closeModalHandler} onSubmit={submitUserReview} />}

@@ -1,0 +1,179 @@
+.page {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(243, 240, 234, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(243, 240, 234, 0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, #000 30%, transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bgText {
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(243, 240, 234, 0.08);
+}
+
+.bgText1 {
+    top: 6%;
+    left: 48%;
+    transform: translateX(-50%) rotate(-5deg);
+    font-size: min(16vw, 200px);
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+}
+
+.bgText2 {
+    bottom: 10%;
+    left: 12%;
+    transform: rotate(4deg);
+    font-size: min(7vw, 90px);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    -webkit-text-stroke: 1px rgba(232, 162, 61, 0.14);
+}
+
+.bgText3 {
+    top: 38%;
+    right: 4%;
+    transform: rotate(-8deg);
+    font-size: min(5vw, 60px);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px rgba(79, 168, 160, 0.16);
+}
+
+.bgText4 {
+    bottom: 4%;
+    right: 10%;
+    transform: rotate(2deg);
+    font-size: min(4vw, 46px);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 22px;
+}
+
+.logo span {
+    color: var(--amber);
+}
+
+.card h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    margin: 0 0 6px;
+    font-size: 1.6rem;
+}
+
+.sub {
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+    margin-bottom: 28px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+}
+
+.formGroup input {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.formGroup input:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 1px;
+}
+
+.hint {
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    margin-top: 2px;
+}
+
+.error {
+    font-size: 0.78rem;
+    color: #ff8b91;
+    margin-top: 2px;
+}
+
+.submitBtn {
+    width: 100%;
+    background: var(--amber);
+    color: #1a1510;
+    padding: 13px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 0.98rem;
+    margin-top: 6px;
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.foot {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--ink-dim);
+    margin-top: 18px;
+}
+
+.foot a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: 600;
+}

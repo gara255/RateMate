@@ -8,10 +8,12 @@ export default function isFormEmpty(obj) {
         }
     }
 
-    return {isEmpty : emptyKeys.length > 0, //returnining true if theres empty inputs
-            keys: emptyKeys
+    return {
+        isEmpty: emptyKeys.length > 0, //returnining true if theres empty inputs
+        keys: emptyKeys
     }
-        
-        
-    
+
+
+
+
 }

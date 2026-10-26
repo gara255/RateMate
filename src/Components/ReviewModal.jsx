@@ -29,7 +29,6 @@ export default function ReviewModal({ onClose, onSubmit }) {
             pros: form.get('pros'),
             cons: form.get('cons'),
             verdict: form.get('verdict')
-            
         }
 
         let result = isFormEmpty(creatingReviewTextNames)
@@ -41,7 +40,7 @@ export default function ReviewModal({ onClose, onSubmit }) {
         }
 
 
-        onSubmit({...creatingReviewTextNames,background_image: coverImage}) //sending the form obj + game image
+        onSubmit({ ...creatingReviewTextNames, background_image: coverImage }) //sending the form obj + game image
     }
 
     const selectGame = (game) => {
@@ -49,7 +48,7 @@ export default function ReviewModal({ onClose, onSubmit }) {
         setResults([])
         setCoverImage(game.background_image)
         setSelected(true)
-        
+
     }
 
     let handleSearch = (e) => {
