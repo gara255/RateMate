@@ -4,6 +4,16 @@ import fetchRequest from "../API/fetchRequestToOurDB"
 import useAuth from "../hooks/useAuth"
 import styles from "./ReviewDetailsPage.module.css"
 
+const REACTION_TYPES = [
+    { key: "fire", emoji: "🔥" },
+    { key: "skull", emoji: "💀" },
+    { key: "handshake", emoji: "🤝" },
+    { key: "eggplant", emoji: "🍆" },
+    { key: "finger", emoji: "🖕" },
+    { key: "check", emoji: "✅" },
+    { key: "redx", emoji: "❌" },
+]
+
 export default function ReviewDetailsPage() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -12,7 +22,8 @@ export default function ReviewDetailsPage() {
     const [review, setReview] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
     const [editData, setEditData] = useState(null)
-    const [reactions, setReactions] = useState({ fire: 0, skull: 0, handshake: 0 })
+    const [reactionCounts, setReactionCounts] = useState({})
+    const [myReactions, setMyReactions] = useState({})
 
     useEffect(() => {
         async function loadReview() {
@@ -20,7 +31,23 @@ export default function ReviewDetailsPage() {
             setReview(data[0])
         }
         loadReview()
+        loadReactions()
     }, [id])
+
+    async function loadReactions() {
+        const rows = await fetchRequest(`/Reactions?select=*&review_id=eq.${id}`).then(res => res.json())
+
+        const counts = {}
+        const mine = {}
+        rows.forEach(row => {
+            counts[row.type] = (counts[row.type] || 0) + 1
+            if (auth?.user?.id && row.user_id === auth.user.id) {
+                mine[row.type] = row.id
+            }
+        })
+        setReactionCounts(counts)
+        setMyReactions(mine)
+    }
 
     if (!review) return <p className="wrap">Loading...</p>
 
@@ -37,7 +64,7 @@ export default function ReviewDetailsPage() {
 
     const saveEdit = async () => {
         try {
-            await fetchRequest(`/Reviews?id=eq.${id}`, 'PATCH', editData)
+            await fetchRequest(`/Reviews?id=eq.${id}`, 'PATCH', editData, null, auth?.access_token)
             setReview({ ...review, ...editData })
             setIsEditing(false)
         } catch (error) {
@@ -48,15 +75,33 @@ export default function ReviewDetailsPage() {
     const deleteReview = async () => {
         if (!confirm("Delete this review? This can't be undone.")) return
         try {
-            await fetchRequest(`/Reviews?id=eq.${id}`, 'DELETE')
+            await fetchRequest(`/Reviews?id=eq.${id}`, 'DELETE', null, null, auth?.access_token)
             navigate('/Catalog')
         } catch (error) {
             alert(`Error deleting review: ${error.message}`)
         }
     }
 
-    const react = (type) => {
-        setReactions({ ...reactions, [type]: reactions[type] + 1 })
+    const react = async (type) => {
+        if (!auth?.user) {
+            navigate('/Register')
+            return
+        }
+
+        try {
+            if (myReactions[type]) {
+                await fetchRequest(`/Reactions?id=eq.${myReactions[type]}`, 'DELETE', null, null, auth.access_token)
+            } else {
+                await fetchRequest('/Reactions', 'POST', {
+                    review_id: Number(id),
+                    user_id: auth.user.id,
+                    type,
+                }, null, auth.access_token)
+            }
+            loadReactions()
+        } catch (error) {
+            alert(`Error reacting: ${error.message}`)
+        }
     }
 
     return (
@@ -129,9 +174,16 @@ export default function ReviewDetailsPage() {
             )}
 
             <div className={styles.reactionsRow}>
-                <button className={styles.rbtn} onClick={() => react('fire')}>🔥 {reactions.fire}</button>
-                <button className={styles.rbtn} onClick={() => react('skull')}>💀 {reactions.skull}</button>
-                <button className={styles.rbtn} onClick={() => react('handshake')}>🤝 {reactions.handshake}</button>
+                {REACTION_TYPES.map(({ key, emoji }) => (
+                    <button
+                        key={key}
+                        className={styles.rbtn}
+                        style={myReactions[key] ? { borderColor: "var(--amber)" } : undefined}
+                        onClick={() => react(key)}
+                    >
+                        {emoji} {reactionCounts[key] || 0}
+                    </button>
+                ))}
             </div>
         </section>
     )

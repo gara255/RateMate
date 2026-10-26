@@ -2,13 +2,12 @@ const apiKey = import.meta.env.VITE_SUPABASE_KEY
 const url = import.meta.env.VITE_SUPABASE_URL
 const authUrl = import.meta.env.VITE_SUPABASE_AUTH_URL
 
-export default async function fetchRequest(path = '/', method = 'GET', data = null, signal = null) {
-   return baseRequest(url, path, method, data, signal)
-
+export default async function fetchRequest(path = '/', method = 'GET', data = null, signal = null, accessToken = null) {
+    return baseRequest(url, path, method, data, signal, accessToken)
 }
 
-async function baseRequest(url, path = '/', method = 'GET', data = null, signal = null) {
- const options = {
+async function baseRequest(url, path = '/', method = 'GET', data = null, signal = null, accessToken = null) {
+    const options = {
         headers: {
             apiKey,
         }
@@ -20,9 +19,13 @@ async function baseRequest(url, path = '/', method = 'GET', data = null, signal 
         options.headers['Content-Type'] = 'application/json'
         options.body = JSON.stringify(data)
     }
-     if (signal) {
+    if (signal) {
         options.signal = signal
     }
+    if (accessToken) {
+        options.headers['Authorization'] = `Bearer ${accessToken}`
+    }
+
     const response = await fetch(`${url}${path}`, options)
 
     if (!response.ok) {
@@ -31,7 +34,7 @@ async function baseRequest(url, path = '/', method = 'GET', data = null, signal 
 
     return response
 }
+
 export const authRequest = async (path = '/', method = 'GET', data = null, signal = null) => {
     return baseRequest(authUrl, path, method, data, signal)
 }
-

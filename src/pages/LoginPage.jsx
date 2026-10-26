@@ -30,7 +30,8 @@ function LoginPage() {
         }
 
         try {
-            const loggedUser = await login(formData.email, formData.password)
+            const response = await login(formData.email, formData.password)
+            const loggedUser = await response.json()
             setAuth(loggedUser)
             navigate("/")
         } catch (error) {

@@ -1,5 +1,4 @@
-export default function ReviewCard({ game, rating, pros, cons, verdict, background_image }) {
-
+export default function ReviewCard({ game, rating, pros, cons, verdict, background_image, author_username }) {
 
     return (
         <article className="card">

@@ -27,15 +27,13 @@ export default function RegisterPage() {
             return setError('All fields are required.')
         }
         try {
-            let user = await register(formData.username, formData.email, formData.password)
+            const response = await register(formData.username, formData.email, formData.password)
+            const user = await response.json()
             setAuth(user)
             navigate("/")
-
         } catch (error) {
-            console.log(error.message)
+            setError(error.message)
         }
-        // TODO: Supabase Auth register call тук, после navigate('/')
-        console.log('Submitting:', formData)
     }
 
 

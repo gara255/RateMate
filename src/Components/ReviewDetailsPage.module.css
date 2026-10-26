@@ -1,0 +1,95 @@
+.details {
+    padding: 60px 0;
+}
+
+.dHead {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 600px) {
+    .dHead { grid-template-columns: 1fr; }
+}
+
+.dCover {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bg-raised), #2a2640);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-dim);
+}
+
+.dCover img { width: 100%; height: 100%; object-fit: cover; }
+
+.dScore {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 12px;
+    color: var(--ink-dim);
+}
+
+.dScore strong { font-family: 'Fraunces', serif; color: var(--amber); font-size: 1.2rem; }
+
+.dBy { color: var(--ink-dim); margin-bottom: 14px; }
+
+.dActions { display: flex; gap: 10px; }
+
+.pc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 600px) { .pc { grid-template-columns: 1fr; } }
+
+.pcBox {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.pcBox h4 { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 8px; }
+.pcBox.pros h4 { color: var(--good, #72d6a0); }
+.pcBox.cons h4 { color: var(--bad, #ff8b91); }
+
+.verdictBox {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 28px;
+}
+
+.editBox {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.reactionsRow { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.rbtn {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    color: var(--ink);
+    font-family: inherit;
+}
+
+.rbtn:hover { border-color: var(--amber); }

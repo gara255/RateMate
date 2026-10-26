@@ -9,6 +9,7 @@ import NotFoundPage from './pages/PageNotFound'
 import { useState } from 'react'
 import { AuthContext } from './context/AuthContext'
 import LoginPage from './pages/LoginPage'
+import ReviewDetailsPage from './Components/ReviewDetailsModal'
 
 
 function App() {
