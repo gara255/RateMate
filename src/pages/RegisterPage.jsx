@@ -1,12 +1,12 @@
-import { useContext, useState } from "react"
-import { Link, Navigate, useNavigate } from "react-router"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router"
 import styles from "./RegisterPage.module.css"
 import register from "../API/register-api"
-import { AuthContext } from "../context/AuthContext"
+import useAuth from "../hooks/useAuth"
 
 
 export default function RegisterPage() {
-    const { setAuth } = useContext(AuthContext)
+    const { auth, setAuth } = useAuth()
     const [formData, setFormData] = useState({
         username: '',
         email: '',

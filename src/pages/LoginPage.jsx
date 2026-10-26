@@ -14,7 +14,6 @@ function LoginPage() {
         password: "",
     })
 
-
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -31,7 +30,7 @@ function LoginPage() {
         }
 
         try {
-            const loggedUser = await login(formData.user, formData.password)
+            const loggedUser = await login(formData.email, formData.password)
             setAuth(loggedUser)
             navigate("/")
         } catch (error) {
@@ -52,14 +51,14 @@ function LoginPage() {
 
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="email">Email</label>
                         <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="GameFan123"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
                             autoComplete="off"
-                            value={formData.username}
+                            value={formData.email}
                             onChange={handleChange}
                         />
                     </div>
@@ -74,14 +73,12 @@ function LoginPage() {
                             value={formData.password}
                             onChange={handleChange}
                         />
-                        <span className={styles.hint}>At least 8 characters.</span>
                     </div>
 
                     {error && <p className={styles.error}>{error}</p>}
 
                     <button type="submit" className={styles.submitBtn}>Log In</button>
                 </form>
-
             </div>
         </div>
     )
