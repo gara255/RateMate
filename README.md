@@ -1,16 +1,53 @@
-# React + Vite
+# RateMate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A game review & rating platform built with React. Users can browse reviews, create an account, write their own reviews for games (pulled from the RAWG API), and react to reviews with 🔥 💀 🤝 and more.
 
-Currently, two official plugins are available:
+## Tech stack
+- React 19 + Vite
+- React Router (`react-router`)
+- Framer Motion (page/card transitions)
+- Supabase (Auth + Database, accessed via REST API, Row Level Security enabled)
+- RAWG API (game search/cover images)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Installation
 
-## React Compiler
+1. Clone the repo
+   git clone https://github.com/gara255/ratemate.git
+   cd ratemate
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. Install dependencies
 
-## Expanding the ESLint configuration
+   npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Create a `.env` file in the project root with:
+
+   VITE_SUPABASE_URL=your_supabase_project_rest_url
+   VITE_SUPABASE_AUTH_URL=your_supabase_project_auth_url
+   VITE_SUPABASE_KEY=your_supabase_anon_key
+   VITE_RAWG_SEARCH_KEY=your_rawg_api_key
+
+4. Run the dev server
+
+   npm run dev
+
+
+## Functional guide
+
+- **Home** (`/`) — hero section, quick stats, 3 most recent reviews, "how it works" section.
+- **Catalog** (`/Catalog`) — paginated list of all reviews.
+- **Review details** (`/Catalog/:id`) — full review with pros/cons, verdict, and reactions. Only the review's author sees Edit/Delete.
+- **Register** (`/Register`) — create an account (username, email, password).
+- **Login** (`/Login`) — log in with email and password.
+- **Profile** (`/Profile/:userId`) — all reviews written by a specific user; click your username in the header to see your own.
+- **Write a review** — available from the Home page once logged in; search for a game (RAWG API), rate it 1–10, add pros/cons and a verdict.
+
+## Security
+
+- Supabase Row Level Security enabled on `Reviews` and `Reactions` tables.
+- Only authenticated users can create reviews/reactions.
+- Only the author of a review can edit or delete it, enforced both in the UI and at the database level.
+
+## Deployment
+
+Live app: **https://rate-mate-sooty.vercel.app**
+Backend: Supabase (hosted, no separate backend deploy needed).
