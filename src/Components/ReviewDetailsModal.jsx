@@ -24,6 +24,7 @@ export default function ReviewDetailsPage() {
     const [editData, setEditData] = useState(null)
     const [reactionCounts, setReactionCounts] = useState({})
     const [myReactions, setMyReactions] = useState({})
+    const [loadError, setLoadError] = useState('')
 
     useEffect(() => {
         async function loadReview() {
